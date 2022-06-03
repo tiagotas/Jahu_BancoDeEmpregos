@@ -9,8 +9,8 @@
       <ExibirLog Valor="False"/>
     </Configuracoes>
     <Arquivos>
-      <Arq01 Valor="C:\USERS\USUARIO\DESKTOP\JAHU_BANCODEEMPREGOS\BANCO DE DADOS\DER\PROJETO CONCEITUALXML.XML"/>
-      <Arq02 Valor=""/>
+      <Arq01 Valor="C:\USERS\USUARIO\DESKTOP\JAHU_BANCODEEMPREGOS\BANCO DE DADOS\DER\PROJETO LOGICO.XML"/>
+      <Arq02 Valor="C:\USERS\USUARIO\DESKTOP\JAHU_BANCODEEMPREGOS\BANCO DE DADOS\DER\PROJETO CONCEITUALXML.XML"/>
       <Arq03 Valor=""/>
       <Arq04 Valor=""/>
       <Arq05 Valor=""/>
