@@ -17,7 +17,7 @@ CREATE TABLE Vaga (
     Descricao VARCHAR(255) NOT NULL,
     Salario Double,
     Data_Abertura TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    Data_Fechamento TIMESTAMP,
+    Data_Fechamento TIMESTAMP DEFAULT NULL,
     Ativo ENUM('S','N') DEFAULT 'S',
     FOREIGN KEY(Id_Pessoa) REFERENCES Pessoa (Id)
 );

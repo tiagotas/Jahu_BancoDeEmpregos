@@ -6,7 +6,7 @@ namespace App\Controller;
  * Definimos aqui que nossa classe precisa incluir uma classe de outro subnamespace
  * do projeto, no caso a classe PessoaModel do subnamespace Model
  */
-use App\Model\PessoaModel;
+use App\Model\VagaModel;
 
 
 /**
@@ -27,7 +27,7 @@ class PessoaController extends Controller
      */
     public static function index()
     {      
-        $model = new PessoaModel(); // Instância da Model
+        $model = new VagaModel(); // Instância da Model
         $model->getAllRows(); // Obtendo todos os registros, abastecendo a propriedade $rows da model.
 
         /**
@@ -46,7 +46,7 @@ class PessoaController extends Controller
      */
     public static function form()
     {
-        $model = new PessoaModel();
+        $model = new VagaModel();
 
         if(isset($_GET['id'])) // Verificando se existe uma variável $_GET
             $model = $model->getById( (int) $_GET['id']); // Typecast e obtendo o model preenchido vindo da DAO.
@@ -63,7 +63,7 @@ class PessoaController extends Controller
     {
        // Abaixo cada propriedade do objeto sendo abastecida com os dados informados
        // pelo usuário no formulário (note o envio via POST)
-       $model = new PessoaModel();
+       $model = new VagaModel();
 
        $model->id =  $_POST['id'];
        $model->nome = $_POST['nome'];
@@ -81,7 +81,7 @@ class PessoaController extends Controller
      */
     public static function delete()
     {
-        $model = new PessoaModel();
+        $model = new VagaModel();
 
         $model->delete( (int) $_GET['id'] ); // Enviando a variável $_GET como inteiro para o método delete
 

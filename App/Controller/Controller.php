@@ -30,5 +30,24 @@ abstract class Controller
             include $arquivo_view;
         else
             exit('Arquivo da View não encontrado. Arquivo: ' . $view);
-    }    
+    }
+    
+
+    /**
+     * 
+     */
+    protected static function isProtected()
+    {
+
+    }
+
+    protected static function isCandidato()
+    {
+
+    }
+
+    protected static function isEmpresa()
+    {
+        
+    }
 }
