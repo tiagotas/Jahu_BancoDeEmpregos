@@ -2,121 +2,163 @@
 
 namespace App\DAO;
 
-use App\Model\PessoaModel;
-use \PDO;
+use App\Model\{PessoaModel, PessoaJuridicaModel, PessoaFisicaModel};
+use \PDO, PDOException, Exception;
 
-/**
- * As classes DAO (Data Access Object) são responsáveis por executar os
- * SQL junto ao banco de dados.
- */
-class PessoaDAO extends DAO
+final class PessoaDAO extends DAO
 {
-     /**
-     * Método construtor, sempre chamado na classe quando a classe é instanciada.
-     * Exemplo de instanciar classe (criar objeto da classe):
-     * $dao = new PessoaDAO();
-     */
     public function __construct()
     {
-        /**
-         * Chamando o construtor da classe DAO, isto é, toda vez que chamos o consturo da classe DAO
-         * estamos fazendo a conexão com o banco de dados.
-         */
         parent::__construct();       
     }
 
+    /**
+     * Verifica se um CNPJ já foi cadastrado.
+     */
+    public function isDuplicatedCNPJ($cnpj)
+    {
+        try
+        {        
+            $stmt = $this->cnn->prepare("SELECT id FROM pessoa_juridica WHERE cnpj = :cnpj ");
+            $stmt->execute(array('cnpj' => $cnpj));
+
+            return ($stmt->rowCount() > 0) ? true : false;
+
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 
     /**
-     * Método que recebe um model e extrai os dados do model para realizar o insert
-     * na tabela correspondente ao model. Note o tipo do parâmetro declarado.
+     * Verfifica se um CPF já foi cadastrado.
      */
-    public function insert(PessoaModel $model)
+    public function isDuplicatedCPF($cpf)
     {
-        // Trecho de código SQL com marcadores ? para substituição posterior, no prepare
-        $sql = "INSERT INTO pessoa (nome, cpf, data_nascimento) VALUES (?, ?, ?) ";
+        try
+        {        
+            $stmt = $this->cnn->prepare("SELECT id FROM pessoa_fisica WHERE cpf = :cpf ");
+            $stmt->execute(array('cpf' => $cpf));
 
-
-        // Declaração da variável stmt que conterá a montagem da consulta. Observe que
-        // estamos acessando o método prepare dentro da propriedade que guarda a conexão
-        // com o MySQL, via operador seta "->". Isso significa que o prepare "está dentro"
-        // da propriedade $conexao e recebe nossa string sql com os devidor marcadores.
-        // Para saber mais sobre Preparated Statements, leia: https://www.codigofonte.com.br/artigos/evite-sql-injection-usando-prepared-statements-no-php
-        $stmt = $this->conexao->prepare($sql);
-
-
-        // Nesta etapa os bindValue são responsáveis por receber um valor e trocar em uma 
-        // determinada posição, ou seja, o valor que está em 3, será trocado pelo terceiro ?
-        // No que o bindValue está recebendo o model que veio via parâmetro e acessamos
-        // via seta qual dado do model queremos pegar para a posição em questão.
-        $stmt->bindValue(1, $model->nome);
-        $stmt->bindValue(2, $model->cpf);
-        $stmt->bindValue(3, $model->data_nascimento);
-
-         // Ao fim, onde todo SQL está montando, executamos a consulta.
-        $stmt->execute();
+            return ($stmt->rowCount() > 0) ? true : false;
+            
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
 
     /**
-     * Método que recebe o Model preenchido e atualiza no banco de dados.
-     * Note que neste model é necessário ter a propriedade id preenchida.
+     * Verfifica se um E-mail já foi cadastrado.
      */
-    public function update(PessoaModel $model)
+    public function isDuplicatedEmail($email)
     {
-        $sql = "UPDATE pessoa SET nome=?, cpf=?, data_nascimento=? WHERE id=? ";
+        try
+        {        
+            $stmt = $this->cnn->prepare("SELECT id FROM pessoa WHERE email = :email ");
+            $stmt->execute(array('email' => $email));
 
-        $stmt = $this->conexao->prepare($sql);
-        $stmt->bindValue(1, $model->nome);
-        $stmt->bindValue(2, $model->cpf);
-        $stmt->bindValue(3, $model->data_nascimento);
-        $stmt->bindValue(4, $model->id);
-        $stmt->execute();
+            return ($stmt->rowCount() > 0) ? true : false;
+            
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
 
     /**
-     * Método que retorna todas os registros da tabela pessoa no banco de dados.
+     * 
      */
-    public function select()
+    public function insertPessoaJuridica(PessoaJuridicaModel $model)
     {
-        $sql = "SELECT * FROM pessoa ";
+        $this->conexao->beginTransaction();
 
+        // Insert na tabela de Pessoa
+        $sql = "INSERT INTO pessoa (email, senha) VALUES (?, sha1(?) ) ";
         $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $model->email);
+        $stmt->bindValue(2, $model->senha);
         $stmt->execute();
 
-        // Retorna um array com as linhas retornadas da consulta. Observe que
-        // o array é um array de objetos. Os objetos são do tipo stdClass e 
-        // foram criados automaticamente pelo método fetchAll do PDO.
-        return $stmt->fetchAll(PDO::FETCH_CLASS);        
+        $id_pessoa = $this->conexao->lastInsertId();
+
+        // Insert na tabela de Pessa Juridica
+        $sql = "INSERT INTO pessoa_juridica (id_pessoa, nome_fantasia, razao_social, cnpj) VALUES (?, ?, ?, ?) ";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $model->id_pessoa);
+        $stmt->bindValue(2, $model->nome_fantasia);
+        $stmt->bindValue(3, $model->razao_social);
+        $stmt->bindValue(4, $model->cnpj);
+        $stmt->execute();
+
+        // Insert na tabela de Endereco
+        $sql = "INSERT INTO pessoa_endereco (id_pessoa, cidade, bairro, cep) VALUES (?, ?, ?, ?) ";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $model->id_pessoa);
+        $stmt->bindValue(2, $model->cidade);
+        $stmt->bindValue(3, $model->bairro);
+        $stmt->bindValue(4, $model->cep);
+        $stmt->execute();
+
+        // Insert na tabela de Telefone
+        $stmt = $this->conexao->prepare("INSERT INTO telefone (id_pessoa, numero, whatsapp) VALUES (:id_pessoa, :numero, :whatsapp) ");
+        $stmt->execute(['id_pessoa' => $id_pessoa, 'email' => $model->email, 'senha' => $model->senha]);
+
+        $this->conexao->commit();
     }
 
 
     /**
-     * Retorna um registro específico da tabela pessoa do banco de dados.
-     * Note que o método exige um parâmetro $id do tipo inteiro.
+     * 
      */
-    public function selectById(int $id)
+    public function insertPessoaFisica(PessoaFisicaModel $model)
     {
-        $sql = "SELECT * FROM pessoa WHERE id = ?";
+        $this->conexao->beginTransaction();
 
+        // Insert na tabela de Pessoa
+        $sql = "INSERT INTO pessoa (email, senha) VALUES (?, sha1(?) ) ";
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindValue(1, $id);
+        $stmt->bindValue(1, $model->email);
+        $stmt->bindValue(2, $model->senha);
         $stmt->execute();
 
-        return $stmt->fetchObject("App\Model\PessoaModel"); // Retornando um objeto específico PessoaModel
+        $id_pessoa = $this->conexao->lastInsertId();
+
+        // Insert na tabela de Pessa Juridica
+        $sql = "INSERT INTO pessoa_juridica (id_pessoa, nome, cpf, data_nascimento, genero) VALUES (?, ?, ?, ?, ?) ";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $model->id_pessoa);
+        $stmt->bindValue(2, $model->nome);
+        $stmt->bindValue(3, $model->cpf);
+        $stmt->bindValue(4, $model->data_nascimento);
+        $stmt->bindValue(5, $model->genero);
+        $stmt->execute();
+
+        // Insert na tabela de Endereco
+        $sql = "INSERT INTO pessoa_endereco (id_pessoa, cidade, bairro, cep) VALUES (?, ?, ?, ?) ";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $model->id_pessoa);
+        $stmt->bindValue(2, $model->cidade);
+        $stmt->bindValue(3, $model->bairro);
+        $stmt->bindValue(4, $model->cep);
+        $stmt->execute();
+
+        // Insert na tabela de Telefone
+        $stmt = $this->conexao->prepare("INSERT INTO telefone (id_pessoa, numero, whatsapp) VALUES (:id_pessoa, :numero, :whatsapp) ");
+        $stmt->execute(['id_pessoa' => $id_pessoa, 'email' => $model->email, 'senha' => $model->senha]);
+
+        $this->conexao->commit();
     }
 
 
     /**
-     * Remove um registro da tabela pessoa do banco de dados.
-     * Note que o método exige um parâmetro $id do tipo inteiro.
+     * 
      */
-    public function delete(int $id)
+    public function delete(int $id_pessoa)
     {
-        $sql = "DELETE FROM pessoa WHERE id = ? ";
+        $sql = "UPDATE pessoa SET ativo = 'N' WHERE id_pessoa = ? ";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindValue(1, $id);
+        $stmt->bindValue(1, $id_pessoa);
         $stmt->execute();
     }
 }

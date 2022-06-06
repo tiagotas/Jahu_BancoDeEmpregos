@@ -1,34 +1,68 @@
 <?php
 
-
-use App\Controller\{PessoaController, VagaController};
+use App\Controller\{PessoaController, PessoaFisicaController, PessoaJuridicaController, VagaController};
 
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Para saber mais estrutura switch, leia: https://www.php.net/manual/pt_BR/control-structures.switch.php
 switch ($url) 
 {
     case '/':
         echo "Tela Inicial";
     break;
 
+    /**
+     * Rotas para verificar duplicidades
+     */
+    case '/pessoa/check-email':
+        PessoaController::checkEmail();
+    break;
+
+    case '/pessoa/fisica/check-cpf':
+        PessoaFisicaController::checkCPF();
+    break;
+
+    case '/pessoa/juridica/check-cnpj':
+        PessoaJuridicaController::checkCNPJ();
+    break;
+
+
+    /**
+     * Rotas para Controle de Cadastro de Novos Usuários
+     */
+    case 'pessoa/fisica/cadastro':
+        PessoaFisicaController::cadastro();
+    break;
+
+    case 'pessoa/juridica/cadastro':
+        PessoaJuridicaController::cadastro();
+    break;
+
+
+    /**
+     * Rotas para os Dados do Usuário
+     */
+    case '/pessoa/fisica/meus-dados':
+        PessoaFisicaController::meusDados();
+    break;
+    
+    case '/pessoa/juridica/meus-dados':
+        PessoaJuridicaController::meusDados();
+    break;
+
 
     /**
      * Rotas para Controle de Usuário
      */
-    case '/pessoa/fisica/login':
+    case '/pessoa/login':
+        PessoaController::login();
     break;
 
-    case '/pessoa/juridica/login':
+    case '/pessoa/logout':
+        PessoaController::logout();
     break;
 
     case '/pessoa/recuperar-senha':
-    break;
-
-    case '/pessoa/fisica/meus-dados':
-    break;
-
-    case '/pessoa/juridica/meus-dados':
+        PessoaController::recuperarSenha();
     break;
 
 
@@ -65,5 +99,5 @@ switch ($url)
      */
     default:
         echo "Erro 404";
-        break;
+    break;
 }
