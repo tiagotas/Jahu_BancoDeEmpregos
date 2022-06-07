@@ -6,6 +6,9 @@ use App\Model\PessoaModel;
 
 class PessoaController extends Controller
 {
+    /**
+     * 
+     */
     public static function checkEmail()
     {
         $model = new PessoaModel(); 
@@ -22,24 +25,39 @@ class PessoaController extends Controller
 
     } 
     
+    /**
+     * 
+     */
     final public static function login()
     {
         $model = new PessoaModel(); 
 
     }
 
+
+    /**
+     * 
+     */
     public static function logout()
     {
         $model = new PessoaModel(); 
 
     }
 
+
+    /**
+     * 
+     */
     public static function delete()
     {
         $model = new PessoaModel(); 
 
     }
 
+
+    /**
+     * 
+     */
     public static function recuperarSenha()
     {
         if($_POST)

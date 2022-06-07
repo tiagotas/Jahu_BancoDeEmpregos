@@ -32,3 +32,9 @@ $_ENV['db']['host'] = 'localhost:3306';
 $_ENV['db']['user'] = 'root';
 $_ENV['db']['pass'] = 'cajuru@2022';
 $_ENV['db']['database'] = 'db_mvc';
+
+
+/**
+ * 
+ */
+$_ENV['google_config']['recaptcha_secret_site_key'] = null;

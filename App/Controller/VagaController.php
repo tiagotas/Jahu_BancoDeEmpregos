@@ -6,14 +6,21 @@ use App\Model\VagaModel;
 
 final class VagaController extends Controller
 {
+    /**
+     * 
+     */
     public static function index()
     {      
         $model = new VagaModel(); 
         $model->getAllRows();
 
-        parent::render('Pessoa/ListaPessoa', $model);
+        parent::render('Vaga/ListaVaga', $model);
     }
 
+
+    /**
+     * 
+     */
     public static function cadastro()
     {      
         $model = new VagaModel(); 
@@ -37,7 +44,9 @@ final class VagaController extends Controller
     }
 
 
-
+    /**
+     * 
+     */
     public static function ver()
     {      
         $model = new VagaModel(); 
@@ -46,6 +55,10 @@ final class VagaController extends Controller
         parent::render('Pessoa/ListaPessoa', $model);
     }
 
+
+    /**
+     * 
+     */
     public static function candidatar()
     {      
         $model = new VagaModel(); 
@@ -54,6 +67,10 @@ final class VagaController extends Controller
         parent::render('Pessoa/ListaPessoa', $model);
     }
 
+
+    /**
+     * 
+     */
     public static function delete()
     {
         $model = new VagaModel();
