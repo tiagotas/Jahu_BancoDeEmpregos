@@ -1,13 +1,13 @@
 <?php
 
-use App\Controller\{PessoaController, PessoaFisicaController, PessoaJuridicaController, VagaController};
+use App\Controller\{HomeController, PessoaController, PessoaFisicaController, PessoaJuridicaController, VagaController};
 
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 switch ($url) 
 {
     case '/':
-        echo "Tela Inicial";
+        HomeController::index();
     break;
 
     /**
@@ -29,11 +29,11 @@ switch ($url)
     /**
      * Rotas para Controle de Cadastro de Novos Usuários
      */
-    case 'pessoa/fisica/cadastro':
+    case '/pessoa/fisica/cadastro':
         PessoaFisicaController::cadastro();
     break;
 
-    case 'pessoa/juridica/cadastro':
+    case '/pessoa/juridica/cadastro':
         PessoaJuridicaController::cadastro();
     break;
 

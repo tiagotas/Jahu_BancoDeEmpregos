@@ -46,7 +46,7 @@ final class PessoaJuridicaController extends PessoaController
 
         } else {
 
-            parent::render('Vaga/FormVaga');
+            parent::render('Pessoa/form-cadastro-pj');
         }
     }
 

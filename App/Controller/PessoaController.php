@@ -32,6 +32,7 @@ class PessoaController extends Controller
     {
         $model = new PessoaModel(); 
 
+        parent::render('Login/form-login');
     }
 
 
@@ -67,7 +68,7 @@ class PessoaController extends Controller
 
         } else {
 
-            parent::render('Vaga/FormVaga');
+            parent::render('Login/form-esqueci-senha');
         }
     }
 }

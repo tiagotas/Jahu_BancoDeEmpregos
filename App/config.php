@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set("America/Sao_Paulo"); 
+
 /**
  * Caminhos de Diretório
  * A função define() serve ára definir uma constante do PHP (sem o cifrão
@@ -16,7 +18,7 @@
  * 
  */
 define('BASEDIR', dirname(__FILE__, 2));
-define('VIEWS', BASEDIR . '/View/modules/');
+define('VIEWS', BASEDIR . '/App/View/modules/');
 
 /**
  * Dados de conexão ao Banco de Dados

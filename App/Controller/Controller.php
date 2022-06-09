@@ -26,6 +26,8 @@ abstract class Controller
         //$arquivo_view = "View/modules/$view.php";
         $arquivo_view = VIEWS . $view . ".php";
 
+        //echo $arquivo_view;
+
         if(file_exists($arquivo_view))
             include $arquivo_view;
         else
