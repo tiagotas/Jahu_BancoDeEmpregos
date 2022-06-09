@@ -2,7 +2,9 @@
 <html lang="pt-br">
 
 <head>
-  <title>Banco de Empregos de Jahu - Cadastro Currículo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Banco de Empregos de Jahu - Cadastro Empresa</title>
   <?php include VIEWS . '../includes/config_css.php' ?>
 </head>
 
@@ -15,28 +17,30 @@
   <main class="container">
     <div class="row p-1">
 
-      <div class="col-sm-3 rounded p-3 m-3 shadow text-center text-white-black-shadow bg-cinza-bem-escuro">
+      <div class="col-sm-3 rounded shadow p-3 m-3 text-center text-white-black-shadow bg-cinza-bem-escuro">
         <div>
-          <h3 class="h5 pt-3 text-green-black-shadow text-center">POR QUE ME CADASTRAR?</h3>
-          <div class="pt-3">Faça seu orçamento online e um consultor irá entrar em contato.</div>
+          <h1 class="h5 pt-3 text-green-black-shadow text-center">POR QUE ME CADASTRAR?</h1>
 
-          <h3 class="pt-3 h5 text-green-black-shadow">ORÇAMENTO RÁPIDO E GRÁTIS</h3>
-          <div class="pt-3">Após o cadastro você poderá selecionar as máquinas e receber um orçamento completo.</div>
+          <div class="pt-3">...</div>
 
-          <h3 class="pt-3 h5 text-green-black-shadow">TEM EMPRESA?</h3>
-          <a href="/cadastro/pessoa-juridica" class="btn btn-success mt-3 mb-3">CADASTRO PESSOA JURÍDICA</a>
+          <div class="pt-3 h5 text-green-black-shadow">É PESSOA FÍSICA?</div>
 
-          <h3 class="pt-3 h5 text-green-black-shadow">JÁ TEM CADASTRO?</h3>
-          <a href="/orcamento/login" class="btn btn-success mt-3 mb-3">FAZER LOGIN</a>
+          <a href="/pessoa/fisica/cadastro" class="btn btn-success mt-3 mb-3">CADASTRAR CURRÍCULO</a>
+
+          <div class="pt-3 h5 text-green-black-shadow">JÁ TEM CADASTRO?</div>
+
+          <a href="/pessoa/login" class="btn btn-success mt-3 mb-3">FAZER LOGIN</a>
         </div>
       </div>
 
+
+
       <div class=" col-sm bg-light shadow rounded p-3 mt-3 mb-3">
 
-        <h2 class="h3">
-          CADASTRO DE PESSOA FÍSICA PARA ORÇAMENTO <br />
-          <small class="text-muted"> Este cadastro nos ajudará a oferecer o melhor para as suas necessidades.</small>
-        </h2>
+        <h3>
+          Cadastro de Empresa<br />
+          <small class="text-muted"> Este cadastro permitirá cadastrar todas as vagas buscar currículos.</small>
+        </h3>
 
         <?php if (isset($model) && $model->hasValidationErrors()) : ?>
           <div class="alert alert-danger" role="alert">
@@ -51,94 +55,82 @@
           </div>
         <?php endif ?>
 
-        <form action="/cadastro/pessoa-fisica/save" method="post">
+        <form action="/cadastro/pessoa-juridica/save" method="post">
 
           <div class="form-row">
 
             <div class="form-group col-md-6">
-              <label for="nome"><span class="text-danger">*</span> Nome Completo: </label>
-              <input name="nome" value="<?= $model->nome ?>" requirede class="form-control">
+              <label for="razao_social"><span class="text-danger">*</span> Razão Social: </label>
+              <input name="razao_social" id="razao_social" value="<?= $model->razao_social ?>" requirede autofocuss class="form-control">
             </div>
 
             <div class="form-group col-md-6">
-              <label for="profissao"><span class="text-danger">*</span> Profissão</label>
-              <input id="profissao" name="profissao" requirede value="<?= $model->profissao ?>" class="form-control">
-            </div>            
-
-            <div class="form-group col-md-3">
-              <label for="data_nascimento"><span class="text-danger">*</span> Data de Nascimento:</label>
-              <input id="data_nascimento" name="data_nascimento" requirede type="text" value="<?= '' //String_Utils::toBrDate($model->data_nascimento) ?>" class="form-control mask-date">
+              <label for="nome_fantasia"><span class="text-danger">*</span> Nome Fantasia: </label>
+              <input name="nome_fantasia" id="nome_fantasia" value="<?= $model->nome_fantasia ?>" requirede class="form-control">
             </div>
 
-            <div class="form-group col-md-3">
-              <label for="cpf"><span class="text-danger">*</span> CPF:</label>
-              <input id="cpf" name="cpf" requirede value="<?= $model->cpf ?>" class="form-control mask-cpf">
+
+
+            <div class="form-group col-md-4">
+              <label for="email"><span class="text-danger">*</span> E-mail:</label>
+              <input id="email" name="email" type="email" value="<?= $model->email ?>" class="form-control">
             </div>
 
-            <div class="form-group col-md-3">
-              <label for="rg"><span class="text-danger">*</span> RG:</label>
-              <input id="rg" name="rg" requirede value="<?= $model->rg ?>" class="form-control">
+
+
+            <div class="form-group col-md-4">
+              <label for="cnpj"><span class="text-danger">*</span> CNPJ:</label>
+              <input id="cnpj" name="cnpj" requirede value="<?= $model->cnpj ?>" class="form-control mask-cnpj">
             </div>
 
-            <div class="form-group col-md-3">
-              <label for="sexo"><span class="text-danger">*</span> Sexo:</label>
-              <select name="sexo" id="sexo" class="form-control" requrede>
-                <option value="">Selecione...</option>
-                <option value="M" <?= '' //CadastroController::setSexoSelected('M', $model->sexo) ?>>Masculino</option>
-                <option value="F" <?= '' //CadastroController::setSexoSelected('F', $model->sexo) ?>>Feminino</option>
-              </select>
+            <div class="form-group col-md-4">
+              <label for=ie> Inscrição Estadual:</label>
+              <input id="ie" name="ie" requirede value="<?= $model->ie ?>" class="form-control">
             </div>
 
-            <div class="form-group col-md-3">
+
+            <div class="form-group col-md-4">
               <label for="telefone_fixo">Telefone Fixo:</label>
               <input id="telefone_fixo" name="telefone_fixo" value="<?= $model->telefone_fixo ?>" class="form-control mask-telefone-fixo">
               <small id="telefone_fixoHelp" class="form-text text-muted">
-                <input type="checkbox" name="fixo_whatsapp" id="fixo_whatsapp" value="true" <?= '' //CadastroController::setTelefoneWhatsappCheck($model->fixo_whatsapp) ?> />
+                <input type="checkbox" name="fixo_whatsapp" id="fixo_whatsapp" value="true" <?= ''// CadastroController::setTelefoneWhatsappCheck($model->fixo_whatsapp) ?> />
                 <label for="fixo_whatsapp">Este fixo é Whatsapp</label>
               </small>
             </div>
 
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
               <label for="telefone_celular"><span class="text-danger">*</span> Telefone Celular:</label>
               <input id="telefone_celular" name="telefone_celular" requirede value="<?= $model->telefone_celular ?>" class="form-control mask-telefone">
               <small id="telefone_celularHelp" class="form-text text-muted">
-                <input type="checkbox" name="celular_whatsapp" id="celular_whatsapp" value="true" <?= ''// CadastroController::setTelefoneWhatsappCheck($model->celular_whatsapp) ?> />
+                <input type="checkbox" name="celular_whatsapp" id="celular_whatsapp" value="true" <?= '' //CadastroController::setTelefoneWhatsappCheck($model->celular_whatsapp) ?> />
                 <label for="celular_whatsapp">Este celular é Whatsapp</label>
               </small>
             </div>
 
-            <div class="form-group col-md-6">
-              <label for="email"><span class="text-danger">*</span> E-mail:</label>
-              <input id="email" name="email" type="email" value="<?= $model->email ?>" autocomplete="off" requirede class="form-control">
+            <div class="form-group col-md-4">
+              <label for="nome_contato"><span class="text-danger">*</span> Nome para Contato: </label>
+              <input name="nome_contato" id="nome_contato" value="<?= $model->nome_contato ?>" requirede class="form-control">
             </div>
-
-           
           </div>
-
-          <fieldset class="border rounded p-3 bg-white shadow">
-           
-           <legend class="w-auto rounded border h6 p-1 text-center bg-light ">
-             <strong>DADOS DE ENDEREÇO</strong>
-           </legend>
 
           <div class="form-row">
 
             <div class="form-group col-md-9">
               <label for="endereco"><span class="text-danger">*</span> Endereço:</label>
-              <input type="text" class="form-control" name="endereco" id="endereco" maxlength="150" value="<?= $model->endereco ?>" requirede placeholder="Ex: Rua José Carlone, 341" />
+              <input type="text" class="form-control" name="endereco" id="endereco" maxlength="150" value="<?= $model->endereco ?>" placeholder="Ex: Rua José Carlone, 341" />
             </div>
 
             <div class="form-group col-md-3">
               <label for="cep"><span class="text-danger">*</span> CEP:</label>
-              <input type="text" class="form-control mask-cep" name="cep" id="cep" value="<?= $model->cep ?>" requirede />
-              <small id="cepHelp" class="form-text text-muted">
+              <input type="text" class="form-control mask-cep" name="cep" id="cep" value="<?= $model->cep ?>" />
+              <small id="telefone_celularHelp" class="form-text text-muted">
                 <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/default.cfm" title="Consulte seu CEP aqui." target="_blank">Não sei meu CEP</a>
               </small>
             </div>
 
             <div class="form-group col-md-4">
               <label for="bairro"><span class="text-danger">*</span> Bairro:</label>
-              <input type="text" class="form-control" name="bairro" id="bairro" requirede maxlength="150" value="<?= $model->bairro ?>" />
+              <input type="text" class="form-control" name="bairro" id="bairro" maxlength="150" value="<?= $model->bairro ?>" />
             </div>
 
 
@@ -153,10 +145,9 @@
               <?php //new Metoda\BrazilianCities($model->cidades, $model->id_cidade, 'form-control') ?>
             </div>
           </div>
-          </fieldset>
 
-          <fieldset class="border rounded p-3 mt-3 bg-white shadow">
-           
+          <fieldset class="border rounded p-3 bg-white shadow">
+            
             <legend class="w-auto rounded border h6 p-1 text-center bg-light ">
               <strong>SUA SENHA DE ACESSO</strong>
             </legend>
@@ -165,27 +156,24 @@
 
               <div class="form-group col-md-6">
                 <label for="senha">Senha:</label>
-                <input type="password" class="form-control" name="senha" id="senha" requirede />
+                <input type="password" class="form-control" name="senha" id="senha" />
               </div>
 
               <div class="form-group col-md-6">
                 <label for="senha_confirmacao">Confirme a Senha:</label>
-                <input type="password" class="form-control" name="senha_confirmacao" requirede id="senha_confirmacao" placeholder="Redigite a senha aqui para garantir" />
-                <div class="invalid-feedback">
-                  A confirmação da senha não confere com a senha escolhida.
-                </div>
+                <input type="password" class="form-control" name="senha_confirmacao" id="senha_confirmacao" placeholder="Redigite a senha aqui para garantir" />
               </div>
             </div>
 
           </fieldset>
 
           <p class="pt-3">
-            <input type="checkbox" name="accept_private_policy" requirede id="accept_private_policy" value="true" <?= '' //CadastroController::setPrivacyPolicyCheck($model->accept_private_policy) ?> />
+            <input type="checkbox" name="accept_private_policy" id="accept_private_policy" value="true" <?= '' //CadastroController::setPrivacyPolicyCheck($model->accept_private_policy) ?> />
 
             <label for="accept_private_policy" class="d-inline">
               <span class="text-danger">*</span>
-              Concordo com a <a href="/politica-privacidade" target="_blank" title="Como a SpartansFit irá manter meus dados?">
-                Política de Privacidade e de Cookies</a> da SpartansFit.
+              Concordo com a <a href="/politica-privacidade" target="_blank" title="">
+                Política de Privacidade e de Cookies</a>
             </label>
           </p>
 
@@ -197,7 +185,7 @@
 
 
           <div class="form-row p-3  align-items-center justify-content-center ">
-            <button type="submit" class="btn btn-lg btn-success text-white-black-shadow">SALVAR E INICIAR ORÇAMENTO</button>
+            <button type="submit" class="btn btn-lg btn-success text-white-black-shadow">SALVAR E BUSCAR CURRÍCULOS</button>
           </div>
 
           <!-- Modal -->
@@ -205,7 +193,7 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">SpartansFit</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Banco de Empregos</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>

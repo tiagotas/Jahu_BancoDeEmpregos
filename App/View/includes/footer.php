@@ -2,6 +2,7 @@
 
   <div class="row ">
 
+  <!--
   <div class="toast fixed-bottom mw-75 w-75 shadow " data-autohide="false" style="max-width:75%; bottom: 16px; margin: auto;">
     <div class="toast-header">
       <div class="mr-auto">Banco de Empregos: Política de Privacidade & Política de Cookies</div>
@@ -18,6 +19,7 @@
       </div>
     </div>
   </div>
+-->
 
   </div>
 

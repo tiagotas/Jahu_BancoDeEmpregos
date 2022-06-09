@@ -17,7 +17,8 @@ date_default_timezone_set("America/Sao_Paulo");
  * Constante Mágica __FILE__ => https://www.php.net/manual/pt_BR/language.constants.magic.php
  * 
  */
-define('BASEDIR', dirname(__FILE__, 2));
+//define('BASEDIR', dirname(__FILE__, 2));
+define('BASEDIR', '/home/metodaco/bancodeempregos.metoda.com.br');
 define('VIEWS', BASEDIR . '/App/View/modules/');
 
 /**

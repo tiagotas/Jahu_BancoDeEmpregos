@@ -10,7 +10,7 @@
         <section id="header-logo" class="col p-1 align-self-center">
           <h1>
             <a href="/" title="Ir para a Página Inicial.">
-              Banco de Empregos de Jahu
+              Banco de Empregos de Jaú
             </a>
           </h1>
         </section>

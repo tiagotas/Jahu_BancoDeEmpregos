@@ -21,7 +21,7 @@ final class PessoaFisicaController extends PessoaController
 
         } else {
 
-            parent::render('Pessoa/form-cadastro-pf');
+            parent::render('PessoaFisica/form-cadastro-pf');
         }
     }
 

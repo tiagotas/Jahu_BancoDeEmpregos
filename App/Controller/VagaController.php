@@ -40,7 +40,7 @@ final class VagaController extends Controller
                 $model = $model->getById( (int) $_GET['id']);            
         }
 
-        parent::render('Vaga/FormVaga', $model);
+        parent::render('Vaga/form-cadastro-vaga', $model);
     }
 
 
