@@ -13,7 +13,7 @@ class PessoaController extends Controller
     {
         $model = new PessoaModel(); 
 
-        $model->checkCPF($_GET['cpf']);
+        $model->checkEmail($_GET['email']);
 
         if($model->hasValidationErrors()) 
         {
@@ -22,7 +22,6 @@ class PessoaController extends Controller
             parent::setResponseAsJSON($errors, false);         
         } else
             parent::setResponseAsJSON(null, true);
-
     } 
     
     /**
@@ -30,7 +29,13 @@ class PessoaController extends Controller
      */
     final public static function login()
     {
-        $model = new PessoaModel(); 
+        if($_POST)
+        {
+            $model = new PessoaModel();
+            
+            if($model->login())
+                header("Location: /");
+        }
 
         parent::render('Login/form-login');
     }
@@ -39,10 +44,13 @@ class PessoaController extends Controller
     /**
      * 
      */
-    public static function logout()
+    final public static function logout()
     {
         $model = new PessoaModel(); 
 
+        $model->logout();
+
+        header("Location: /");
     }
 
 
@@ -59,16 +67,54 @@ class PessoaController extends Controller
     /**
      * 
      */
-    public static function recuperarSenha()
+    final public static function recuperarSenha()
     {
         if($_POST)
         {
             $model = new PessoaModel(); 
 
 
-        } else {
-
-            parent::render('Login/form-esqueci-senha');
         }
+
+        parent::render('Login/form-esqueci-senha');
+    }
+
+    /**
+     * [OK] Obtém a lista de cidades de acordo com um estado.
+     */
+    public static function cidadesByEstado()
+    {
+        $model = new CadastroModel();
+
+        $cidades = $model->getCitiesByState($_GET['estado']);
+
+        parent::setResponseAsJSON($cidades);
+    }
+
+    
+    /**
+     * [OK] Define qual área de atuação está selecionada em caso de validação do formulário.
+     */
+    public static function setTelefoneWhatsappCheck($model_value)
+    {
+        return ($model_value == 'S') ? 'checked' : '';
+    }
+
+
+    /**
+     * [OK] Define qual área de atuação está selecionada em caso de validação do formulário.
+     */
+    public static function setSexoSelected($sexo, $model_value)
+    {
+        return ($sexo == $model_value) ? 'selected' : '';
+    }
+
+
+    /**
+     * [OK] Define qual área de atuação está selecionada em caso de validação do formulário.
+     */
+    public static function setPrivacyPolicyCheck($model_value)
+    {
+        return (!empty($model_value)) ? 'checked' : '';
     }
 }

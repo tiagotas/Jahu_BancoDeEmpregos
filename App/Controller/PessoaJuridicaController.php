@@ -55,6 +55,8 @@ final class PessoaJuridicaController extends PessoaController
      */
     public static function meusDados()
     {
+        parent::isProtected();
+        
         if($_POST)
         {
             $model = new PessoaJuridicaModel(); 

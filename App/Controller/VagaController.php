@@ -22,7 +22,9 @@ final class VagaController extends Controller
      * 
      */
     public static function cadastro()
-    {      
+    {
+        parent::isProtected();
+
         $model = new VagaModel(); 
 
         if($_POST)
@@ -60,7 +62,9 @@ final class VagaController extends Controller
      * 
      */
     public static function candidatar()
-    {      
+    {
+        parent::isProtected();
+
         $model = new VagaModel(); 
         $model->getAllRows();
 
@@ -73,6 +77,8 @@ final class VagaController extends Controller
      */
     public static function delete()
     {
+        parent::isProtected();
+        
         $model = new VagaModel();
 
         $model->delete( (int) $_GET['id'] ); // Enviando a variável $_GET como inteiro para o método delete

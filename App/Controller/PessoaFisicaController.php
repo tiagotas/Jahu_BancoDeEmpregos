@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\PessoaFisicaModel;
+use App\Model\{ PessoaFisicaModel, EnderecoModel, TelefoneModel };
 
 final class PessoaFisicaController extends PessoaController
 {    
@@ -18,6 +18,28 @@ final class PessoaFisicaController extends PessoaController
         {
             $model = new PessoaFisicaModel(); 
 
+            $model->nome = $_POST['nome'];
+            $model->rg = $_POST['rg'];
+            $model->cpf = $_POST['cpf'];
+            $model->genero = $_POST['genero'];
+            $model->email = $_POST['email'];
+            $model->senha = $_POST['senha'];
+
+            $model_endereco = new EnderecoModel();
+            $model_endereco->endereco = $_POST['endereco'];
+            $model_endereco->cidade = $_POST['cidade'];
+            $model_endereco->bairro = $_POST['bairro'];
+            $model_endereco->cep = $_POST['cep'];
+
+            $model_telefone = new TelefoneModel();
+            $model_telefone->numero = $_POST['cep'];
+            $model_telefone->whatsapp = $_POST['cep'];
+
+            $model->endereco = $model_endereco;
+            $model->telefone = $model_telefone;
+
+            $model->save();
+
 
         } else {
 
@@ -27,6 +49,8 @@ final class PessoaFisicaController extends PessoaController
 
     public static function meusDados()
     {
+        parent::isPessoaFisica();
+
         if($_POST)
         {
             $model = new PessoaFisicaModel(); 
@@ -34,7 +58,10 @@ final class PessoaFisicaController extends PessoaController
 
         } else {
 
-            parent::render('Vaga/FormVaga');
+            parent::render('PessoaFisica/form-meus-dados-pf');
         }
     }
+
+
+    
 }

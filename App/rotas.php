@@ -1,6 +1,14 @@
 <?php
 
-use App\Controller\{HomeController, PessoaController, PessoaFisicaController, PessoaJuridicaController, VagaController};
+use App\Controller\
+{
+    EnderecoController, 
+    HomeController, 
+    PessoaController, 
+    PessoaFisicaController, 
+    PessoaJuridicaController, 
+    VagaController
+};
 
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -10,6 +18,7 @@ switch ($url)
         HomeController::index();
     break;
 
+    
     /**
      * Rotas para verificar duplicidades
      */
@@ -47,6 +56,26 @@ switch ($url)
     
     case '/pessoa/juridica/meus-dados':
         PessoaJuridicaController::meusDados();
+    break;
+
+
+    /**
+     * Rotas para o usuário adicionar telefone e endereco
+     */
+    case '/pessoa/endereco/cadastro':
+        EnderecoController::cadastro();
+    break;
+
+    case '/pessoa/endereco/remover':
+        EnderecoController::delete();
+    break;
+
+    case '/pessoa/telefone/cadastro':
+        EnderecoController::cadastro();
+    break;
+
+    case '/pessoa/telefone/delete':
+        EnderecoController::delete();
     break;
 
 

@@ -33,6 +33,15 @@ abstract class Controller
         else
             exit('Arquivo da View não encontrado. Arquivo: ' . $view);
     }
+
+
+    /**
+     * 
+     */
+    protected static function getCurrentPessoaId()
+    {
+        return $_SESSION['metoda_autenticated_user']['id'];
+    }
     
 
     /**
@@ -40,20 +49,46 @@ abstract class Controller
      */
     protected static function isProtected()
     {
+        
 
     }
 
-    protected static function isCandidato()
+
+    /**
+     * 
+     */
+    protected static function isPessoaJuridica()
     {
+        self::isProtected();
 
     }
 
-    protected static function isEmpresa()
+    
+    /**
+     * 
+     */
+    protected static function isPessoaFisica()
     {
+        self::isProtected();
         
     }
 
 
+    /**
+     * 
+     */
+    protected static function isAjax()
+    {
+        if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strcmp(!strtolower($_SERVER['HTTP_X_REQUESTED_WITH']), 'xmlhttprequest'))
+            return true;
+        else 
+            return false;
+    }
+
+
+    /**
+     * 
+     */
     protected static function setResponseAsJSON($data, $request_status = true)
     {
         $response = array('response_data' => $data, 'response_successful' => $request_status);
@@ -65,5 +100,4 @@ abstract class Controller
 
         exit(json_encode($response));
     }
-
 }
