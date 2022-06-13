@@ -83,10 +83,6 @@
               <input id="cnpj" name="cnpj" requirede value="<?= $model->cnpj ?>" class="form-control mask-cnpj">
             </div>
 
-            <div class="form-group col-md-4">
-              <label for=ie> Inscrição Estadual:</label>
-              <input id="ie" name="ie" requirede value="<?= $model->ie ?>" class="form-control">
-            </div>
 
 
             <div class="form-group col-md-4">
@@ -99,21 +95,16 @@
             </div>
 
             <div class="form-group col-md-4">
-              <label for="telefone_celular"><span class="text-danger">*</span> Telefone Celular:</label>
-              <input id="telefone_celular" name="telefone_celular" requirede value="<?= $model->telefone_celular ?>" class="form-control mask-telefone">
-              <small id="telefone_celularHelp" class="form-text text-muted">
-                <input type="checkbox" name="celular_whatsapp" id="celular_whatsapp" value="true" <?= '' //CadastroController::setTelefoneWhatsappCheck($model->celular_whatsapp) ?> />
-                <label for="celular_whatsapp">Este celular é Whatsapp</label>
-              </small>
-            </div>
-
-            <div class="form-group col-md-4">
               <label for="nome_contato"><span class="text-danger">*</span> Nome para Contato: </label>
               <input name="nome_contato" id="nome_contato" value="<?= $model->nome_contato ?>" requirede class="form-control">
             </div>
           </div>
 
-          <div class="form-row">
+          <fieldset class="border rounded p-3 bg-white shadow">            
+            <legend class="w-auto rounded border h6 p-1 text-center bg-light ">
+              <strong>DADOS DE ENDEREÇO</strong>
+            </legend>
+            <div class="form-row">
 
             <div class="form-group col-md-9">
               <label for="endereco"><span class="text-danger">*</span> Endereço:</label>
@@ -145,26 +136,24 @@
               <?php //new Metoda\BrazilianCities($model->cidades, $model->id_cidade, 'form-control') ?>
             </div>
           </div>
+          </fieldset>
 
-          <fieldset class="border rounded p-3 bg-white shadow">
-            
+          
+
+          <fieldset class="border rounded p-3 bg-white shadow">            
             <legend class="w-auto rounded border h6 p-1 text-center bg-light ">
-              <strong>SUA SENHA DE ACESSO</strong>
+              <strong>DADOS DE ACESSO</strong>
             </legend>
-
             <div class="form-row">
-
               <div class="form-group col-md-6">
                 <label for="senha">Senha:</label>
                 <input type="password" class="form-control" name="senha" id="senha" />
               </div>
-
               <div class="form-group col-md-6">
                 <label for="senha_confirmacao">Confirme a Senha:</label>
                 <input type="password" class="form-control" name="senha_confirmacao" id="senha_confirmacao" placeholder="Redigite a senha aqui para garantir" />
               </div>
             </div>
-
           </fieldset>
 
           <p class="pt-3">

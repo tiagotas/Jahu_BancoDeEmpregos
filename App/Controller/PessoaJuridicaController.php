@@ -19,10 +19,10 @@ final class PessoaJuridicaController extends PessoaController
      */
     public static function cadastro()
     {
-        if($_POST)
-        {
-            $model = new PessoaJuridicaModel(); 
+        $model = new PessoaJuridicaModel(); 
 
+        if($_POST)
+        {         
             $model->nome_fantasia = $_POST['nome_fantasia'];
             $model->razao_social = $_POST['razao_social'];
             $model->cnpj = $_POST['cnpj'];
@@ -46,7 +46,7 @@ final class PessoaJuridicaController extends PessoaController
 
         } else {
 
-            parent::render('PessoaJuridica/form-cadastro-pj');
+            parent::render('PessoaJuridica/form-cadastro-pj', $model);
         }
     }
 

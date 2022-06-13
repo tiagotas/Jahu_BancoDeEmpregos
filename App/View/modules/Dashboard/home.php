@@ -65,4 +65,10 @@
 
   <?php include VIEWS . '../includes/config_js.php' ?>
 
+  <script src="/View/js/jquery.modal.js">
+</script>
+
+
+  <link rel="stylesheet" href="/View/css/custom.css">
+
 </html>
